@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Transliteration</title>
+  <script type="text/javascript" src="../../jslingua.js" ></script>
+  <script type="text/javascript" src="../../trans.js" ></script>
+  <script type="text/javascript" src="../../ara/ara.trans.js" ></script>
+  <script type="text/javascript" src="../../eng/eng.trans.js" ></script>
+  <script type="text/javascript" src="../../jpn/jpn.trans.js" ></script>
+  <script type="text/javascript" src="../../fra/fra.trans.js" ></script>
+  <script type="text/javascript">
+  var transformer = {};
+  var $ = function(id){return document.getElementById(id)};
+  var _ = function(e){return e.options[e.selectedIndex]};
+
+  function loading(){
+    var e = $("l");
+    var langIDs = JsLingua.serviceLanguages("Trans");
+    var i;
+    for (i = 0; i < langIDs.length; i++){
+      var option = document.createElement("option");
+      option.text = langIDs[i];
+      e.add(option);
+    }
+    update();
+  }
+
+  function update (){
+    var langID = _($("l")).text;
+    var TransClass = JsLingua.getService("Trans", langID);
+    transformer = new TransClass();
+    var methods = transformer.availableMethods();
+    var m = $("m");
+    var i;
+    for(i = m.options.length - 1 ; i >= 0 ; i--){
+      m.remove(i);
+    }
+
+    methods.forEach(function(element, index, array){
+      var option = document.createElement("option");
+      option.text = element;
+      m.add(option);
+    });
+    setMethod();
+  }
+
+  function setMethod(){
+    transformer.setCurrentMethod(_($("m")).value);
+  }
+
+  function lang2trans() {
+    var lang = $("lang");
+    var trans = $("2trans");
+    trans.value = transformer.transliterate(lang.value);
+  }
+
+  function trans2lang() {
+    var lang = $("2lang");
+    var trans = $("trans");
+    lang.value = transformer.untransliterate(trans.value);
+  }
+
+  </script>
+
+  <style type="text/css">
+  input[type=text] {
+    width: 80%;
+  }
+  </style>
+
+</head>
+<body>
+  Choose the language:
+  <select id="l" onchange="update()">
+  </select>
+  <select id="m" onchange="setMethod()">
+  </select>
+  <br>
+  <input type="text" id="lang" /><br>
+  <button onclick="lang2trans()">To Transliteration</button><br>
+  <input type="text" id="2trans" /><br>
+  <br>
+  <input type="text" id="trans" /><br>
+  <button onclick="trans2lang()">From Transliteration</button><br>
+  <input type="text" id="2lang" /><br>
+  <script>
+  loading();
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '7'
+before_install:
+- npm install codecov -g
+- npm install -g codeclimate-test-reporter
+after_success:
+- codecov -e TRAVIS_NODE_VERSION -f coverage/coverage.json
+- codeclimate < ./coverage/lcov.info
+before_deploy:
+- npm install uglify-es
+- bash min.sh
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: kariminfo0@gmail.com
+  api_key:
+    secure: RqO12QHuDCO9r916koFlhIJToAVcZLl4+qvF5GyjYbmxHQzFPTvUEHnpYyOYFihHu5ba8RWvcGg/jN9hiRw74sFM7FjFOpjgp6OHL7oE1MvmOv2bsodHW2LRIOYbd/1XlUlzYqv4sa79/XfvlCwWDwRac54p4txNbK0YzZovp4nm0FYjBlX5tb3cND0Lj5kYF1VgwNbYZrcf8R0UfEgio8p8seQR44J2WGcqA3s9BRV1UGNVytN99JFKyblwEolqWG/3NWYT91iCqqTq7NriqOGugiOIyuhg5KO/BAtdRsXfLX8MnmfjlbKMTBOJNDeqa5iaq5zUDbOAeNUVJdCL20MQSB9dXpl9XzHF4B2yMim/mLPsCDG6UuJpb8RNDqUdlJq0CZho+utB348OrKN0ZYf6BmEonMBPeocYs3h9KPa+fzGBWOwlKQOfO4ABY/wlYkeUhpcFrghB1LjQ92I7JwLt3qXpn3wXO95dQxPQmHqFWTSjMxoGH2XtKTO1KTJilUlA1oMPfrooY0K9hhJsTjy99tUUjMaeqPbXOr7hFp2JXCCHNbWQk3anIYLIyeqIV6wxEcNdou0HdYBtdPuyVy3mO+uyHkGKL6wMmc1sAyRgCzhimSjwbDRBhAgdoSG2oexeRRyV85mCmPPaxKpU5shMH5M9UxkX+ms+4VDVvY8=

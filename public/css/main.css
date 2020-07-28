@@ -1,0 +1,348 @@
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap');
+
+:root {
+    --bg: #ececec;
+    --main: #4e1840;
+    --success: #00c384;
+    --error: #ff6666;
+    --dark-grey: #343434;
+    --light-grey:#464646;
+    --very-light-grey: #dadada;
+}
+
+body {
+    background-color: var(--bg);
+    background: url(../img/bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Nunito', sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+body:before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--bg);
+    opacity: .7;
+}
+
+.japanese {
+    font-family: 'Kosugi Maru', sans-serif;
+}
+
+.wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#menu {
+    margin-left: 10px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.logo {
+    display: inline-block;
+    padding: 7px;
+    border-radius: 3px;
+    background: var(--main);
+    color: white;
+    vertical-align: middle;
+}
+
+[type="checkbox"].filled-in:checked+span:not(.lever):after {
+    border: 2px solid var(--main);
+    background-color: var(--main);
+}
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color: var(--main);
+}
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+    border: 2px solid var(--main);
+}
+.btn-flat:hover, .btn-flat:focus {
+    background: none;
+}
+
+
+/** SETTINGS ________________________________________________________________________________________________ **/
+
+
+.sidenav {
+    width: 100vw;
+    max-width: 500px;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+}
+.sidenav > ul {
+    overflow: auto;
+    position: relative;
+    margin: 0;
+    margin-top: 89px;
+    height: calc(100vh - 89px);
+}
+.sidenav .sidenav-title {
+    font-size: 1.5rem;
+    padding: 20px 38px;
+    cursor: initial;
+    color: var(--dark-grey);
+    line-height: 48px;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    background: var(--bg);
+    top: 0;
+    left: 0;
+}
+.sidenav .sidenav-title i, .sidenav .sidenav-item i {
+    float: left;
+    height: 48px;
+    line-height: 48px;
+    margin: 0 32px 0 0;
+    width: 24px;
+}
+.sidenav .sidenav-title, .sidenav .sidenav-item {
+    border-bottom: 1px solid var(--very-light-grey);
+}
+.sidenav .sidenav-item {
+    padding: 16px 38px;
+    height: auto;
+}
+.sidenav > ul > li:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+.sidenav > ul > li > a:hover {
+    background-color: initial;
+}
+.sidenav li > a {
+    color: var(--dark-grey);
+}
+.sidenav li > a.sidenav-item > i:not(.collapsible-arrow),
+.sidenav .sidenav-title i {
+    color: var(--main);
+}
+
+.sidenav .collapsible-arrow {
+    position: absolute;
+    right: 32px;
+    margin: 0!important;
+    transition: transform .3s;
+}
+.sidenav .sidenav-close-top {
+    position: absolute;
+    top: 20px;
+    right: 32px;
+    padding: 0;
+}
+.sidenav .sidenav-close i {
+    margin: 0!important;
+    font-size: 1.8rem;
+    color: var(--dark-grey);
+}
+.sidenav .sidenav-close:hover {
+    background: none;
+}
+
+.sidenav tr, .sidenav td {
+    padding: 0;
+    border: 0;
+}
+.sidenav label {
+    color: var(--light-grey);
+}
+#formality-settings label, #negation-settings label {
+    width: 100px;
+    display: inline-block;
+}
+
+.sidenav .verb-item {
+    line-height: initial; 
+}
+.verb-item-word {
+    font-size: 1.3rem;
+}
+.verb-item-reading, .verb-item-definition, .verb-item-tags, .verb-item-type {
+    font-size: 12px;
+}
+.verb-item > label > [type="checkbox"]+span:not(.lever) {
+    display: block;
+    height: initial;
+}
+/* .verb-item [type="checkbox"].filled-in:not(:checked)+span:not(.lever):after,
+.verb-item [type="checkbox"].filled-in:checked+span:not(.lever):before {
+    top: 50%;
+    transform: translateY(-50%);
+} */
+
+.settings-template {
+    display: none;
+}
+
+/** SESSION ________________________________________________________________________________________________ **/
+
+#session-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 100%;
+}
+
+#reading {
+    line-height: 5px;
+    color: var(--light-grey);
+}
+#furigana {
+    margin-top: 10px;
+}
+
+#word {
+    font-size: 5rem;
+    line-height: 110px;
+    color: var(--main);
+    transition: transform .4s;
+    margin-top: -10px;
+}
+
+#word.zooming {
+    transform: scale(1.05);
+}
+
+#type {
+    font-weight: bold;
+    margin-top: -17px;
+    color: var(--light-grey);
+    margin-bottom: 9px;
+}
+
+#definition {
+    height: 40px;
+    max-width: 400px;
+    margin: auto;
+    color: var(--light-grey);
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
+#conjugaison {
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 1rem;
+    color: black;
+}
+
+#conjugaison > .conjugaison-infos {
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.04), 0 9px 46px 8px rgba(0,0,0,0.02), 0 11px 15px -7px rgba(0,0,0,0.02);
+}
+
+#conjugaison > .conjugaison-infos > span {
+    padding: 5px 15px;
+    background: white;
+    display: inline-block;
+}
+
+#conjugaison #negation {
+    border-radius: 5px 0 0 5px;
+    width: 82px;
+}
+#conjugaison #formality {
+    border-radius: 0 5px 5px 0;
+    position: relative;
+    width: 82px;
+}
+#conjugaison #tense {
+    background: var(--main);
+    color: white;
+    width: 100px;
+}
+
+#input {
+    text-align : center;
+    border : 0;
+    box-shadow: none;
+    font-size: 3rem;
+    margin-top: 20px;
+    color: var(--main);
+    margin-bottom: 0;
+    color: black;
+}
+
+#input[disabled] {
+    color: var(--dark-grey);
+}
+
+#continue {
+    opacity: 0;
+    height: 45px;
+    margin-top: 10px;
+}
+
+#continue.empty-input {
+    transform: translateY(-48px);
+}
+
+#continue button {
+    color: var(--light-grey);
+}
+
+#continue button:hover {
+    color: black;
+}
+
+.success, .pos, [data-status="success"] * {
+    color: var(--success)!important;
+}
+.error, .neg, [data-status="error"] * {
+    color: var(--error)!important;
+}
+
+#conjugaison i.material-icons, #conjugaison span[data-conjugation="0"] i.material-icons.neg, #conjugaison span[data-conjugation="1"] i.material-icons.pos {
+    display: block;
+    transition: transform .4s;
+}
+#conjugaison i.material-icons.neg, #conjugaison i.material-icons.pos  {
+    display: none;
+}
+
+#conjugaison span.zooming i {
+    transform: scale(1.2);
+}
+
+.hidden {
+    display: none;
+}
+
+.progress {
+    background-color : var(--very-light-grey);
+    margin-top: 15px;
+}
+.progress .determinate {
+    background-color:  var(--main);
+}
+
+@media only screen and (max-width: 420px) {
+    /* #word {
+        font-size: 3.5rem;
+        line-height: 50px;
+        margin-top: 10px;
+        margin-bottom: 12px;
+    } */
+    #input {
+        margin-top: 5px;
+        font-size: 2.5rem;
+    }
+    #type {
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
+    #definition {
+        width: 80%;
+    }
+}

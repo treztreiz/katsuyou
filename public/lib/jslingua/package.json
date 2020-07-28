@@ -1,0 +1,70 @@
+{
+  "name": "jslingua",
+  "version": "0.11.0",
+  "description": "Language processing modules",
+  "main": "jslingua.js",
+  "devDependencies": {
+    "codecov": "^3.6.5",
+    "eslint": "^4.19.1",
+    "expect.js": "^0.3.1",
+    "http-server": "^0.10.0",
+    "inchjs": "^0.4.1",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.3",
+    "jslint": "^0.11.0",
+    "mocha": "^3.5.3",
+    "tui-jsdoc-template": "^1.2.2",
+    "uglify-es": "^3.3.10"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kariminf/jslingua.git"
+  },
+  "keywords": [
+    "language",
+    "transliteration",
+    "NLP",
+    "conjugation",
+    "IR",
+    "stemming",
+    "stemmer",
+    "toolkit",
+    "library",
+    "front-end",
+    "back-end",
+    "pronunciation",
+    "multi-lingual",
+    "multilingual",
+    "normalization",
+    "arabic",
+    "english",
+    "japanese",
+    "french"
+  ],
+  "files": [
+    "info.js",
+    "lang.js",
+    "trans.js",
+    "morpho.js",
+    "ara/",
+    "jpn/",
+    "eng/",
+    "fra/",
+    "dist/"
+  ],
+  "author": "Abdelkrime Aries <kariminfo0@gmail.com>",
+  "contributors": [
+    "Lakhdar Benzahia <lakhdar.benzahia@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kariminf/jslingua/issues"
+  },
+  "homepage": "https://kariminf.github.io/jslingua.web/"
+}

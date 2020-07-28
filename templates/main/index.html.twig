@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<label for="input">
+    <div class="wrapper">
+
+        <div id="menu">
+            <span class="japanese logo">活用</span>
+            <button id="settings-btn" class="btn btn-flat sidenav-trigger" data-target="settings-sidenav"><i class="material-icons">settings</i></button>
+            <button id="study-btn" class="btn btn-flat sidenav-trigger" data-target="study-sidenav"><i class="material-icons">school</i></button>
+            <button class="btn btn-flat" id="speak"><i class="material-icons">volume_up</i></button>
+        </div>
+
+        <div id="session-container">
+            <div id="verb">
+                <div id="reading"><div id="romaji"></div><div id="furigana" class="japanese"></div></div>
+                <div id="word" class="japanese"></div>
+                <div id="type"></div>
+                <div id="definition"></div>
+            </div>
+            <div id="conjugaison">
+                <div class="conjugaison-infos"><span id="negation"><i class="material-icons neg">do_not_disturb</i><i class="material-icons pos">check_circle</i><span class="conjugaison-text"></span></span><span id="tense"><i class="material-icons">live_help</i><span class="conjugaison-text"></span></span><span id="formality"><i class="material-icons neg">sms_failed</i><i class="material-icons pos">sms</i><span class="conjugaison-text"></span></span></div>
+                <div id="timer" class="progress"><div class="determinate" style="width: 0%"></div></div>
+            </div>
+            <form id="form"><input id="input" type="text" class="japanese"></form>
+            <div id="continue"><button class="btn btn-flat">Continue</button></div>
+        </div>
+
+    </div>
+</label>
+
+{% include 'main/settings.html.twig' %}
+{% include 'main/study.html.twig' %}
+
+{% endblock %}

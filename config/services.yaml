@@ -4,6 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    tenses:
+        pres: { label : 'present', default : true }
+        past: { label : 'past' }
+        vol: { label : 'volitional', negation : false }
+        imp: { label : 'imperative' }
+        prov: { label : 'conditional', formality : 'plain' }
 
 services:
     # default configuration for services in *this* file

@@ -1,0 +1,147 @@
+<div id="settings-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">settings</i>Settings</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">close</i></button></div>
+
+    <ul>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="conjugation-sidenav"><i
+                    class="material-icons">tune</i>Conjugation<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="verbs-sidenav"><i
+                    class="material-icons">speaker_notes</i>Verbs<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="display-sidenav"><i
+                    class="material-icons">translate</i>Display<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="sound-sidenav"><i
+                    class="material-icons">volume_up</i>Sound<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+    </ul>
+
+</div>
+
+<div id="conjugation-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">tune</i>Conjugation</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+
+    <ul>
+        <li class="sidenav-item">
+            <div>Formality :</div>
+            <div id="formality-settings">
+                <label>
+                    <input class="settings-input" name="formality" type="radio" value="both" />
+                    <span>Both</span>
+                </label>
+                <label>
+                    <input class="settings-input" name="formality" type="radio" value="plain" />
+                    <span>Plain</span>
+                </label>
+                <label>
+                    <input class="settings-input" name="formality" type="radio" value="polite" />
+                    <span>Polite</span>
+                </label>
+            </div>
+        </li>
+        <li class="sidenav-item">
+            <div>Negation :</div>
+            <div id="negation-settings">
+                <label>
+                    <input class="settings-input" name="negation" type="radio" value="both" />
+                    <span>Both</span>
+                </label>
+                <label>
+                    <input class="settings-input" name="negation" type="radio" value="false" />
+                    <span>Positive</span>
+                </label>
+                <label>
+                    <input class="settings-input" name="negation" type="radio" value="true" />
+                    <span>Negative</span>
+                </label>
+            </div>
+        </li>
+        <li class="sidenav-item">
+            <div>Tenses :</div>
+            <div id="tenses-settings"></div>
+            <div id="tenses-template" class="settings-template">
+                <div>
+                    <label>
+                        <input class="settings-input filled-in" type="checkbox" name="tenses" value="#value#" />
+                        <span>#label#</span>
+                    </label>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div id="verbs-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">speaker_notes</i>Verbs</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+    
+    <ul id="verbs-settings"></ul>
+    <div id="verbs-template" class="settings-template">
+        <li class="sidenav-item verb-item">
+            <label>
+                <input class="filled-in settings-input" name="verbs" value="#id#" type="checkbox">
+                <span>
+                    <div class="verb-item-word japanese">#word#</div>
+                    <div class="verb-item-reading"><span class="verb-item-furigana japanese">#furigana#</span> <span class="verb-item-romaji">(#romaji#)</span></div>
+                    <div class="verb-item-type">#type#</div>
+                    <div class="verb-item-definition">#definition#</div>
+                </span>
+            </label>
+        </li>
+    </div>
+
+</div>
+
+<div id="display-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">translate</i>Display</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+
+    <ul>
+        <li class="sidenav-item">
+            <div>
+                <label>
+                    <input name="romaji" class="filled-in settings-input display-input" type="checkbox" />
+                    <span>Show romaji</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="furigana" class="filled-in settings-input display-input" type="checkbox" />
+                    <span>Show furigana</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="type" class="filled-in settings-input display-input" type="checkbox" />
+                    <span>Show verb type</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="definition" class="filled-in settings-input display-input" type="checkbox" />
+                    <span>Show definition</span>
+                </label>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+<div id="sound-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">volume_up</i>Sound</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+
+    <ul>
+        <li class="sidenav-item">
+            <div>
+                <label>
+                    <input name="sound" class="filled-in settings-input" type="checkbox" />
+                    <span>Enable sound</span>
+                </label>
+            </div>
+        </li>
+    </ul>
+
+</div>
