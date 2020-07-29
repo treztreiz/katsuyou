@@ -498,7 +498,7 @@ class Katsuyou {
 
     speak() {
         var self = this;
-        if(this.settings.voice) this.voice.abort();
+        if(this.settings.voice && this.autoVoice) this.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
@@ -506,7 +506,7 @@ class Katsuyou {
             },
             onend : () => {
                 self.animateZoom(false);
-                if(self.settings.voice) self.voice.resume();
+                if(self.settings.voice && self.autoVoice) self.voice.resume();
             },
         });
     }
@@ -559,12 +559,14 @@ class Katsuyou {
 
     initVoice() {
 
+        this.autoVoice = true;
         this.voiceEl = $('#voice');
+
         if (annyang) {
 
             this.voice = annyang;
             this.voice.setLanguage('ja');
-            if(this.settings.voice) this.voice.start();
+            if( this.settings.voice && this.autoVoice ) this.voice.start({ continuous : false });
 
             const self = this;
             this.voice.addCommands({
@@ -585,6 +587,13 @@ class Katsuyou {
             this.voice.addCallback('end', function() {
                 self.voiceEl.removeClass('on');
             });
+
+            if( !this.autoVoice ) {
+                this.voiceEl.on('click', function(){
+                    console.log('click');
+                    self.voice.start({ continous : false });
+                });
+            }
             
         } else {
             this.settings.voice = false;
