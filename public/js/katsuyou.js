@@ -596,6 +596,7 @@ class Katsuyou {
 
             if( this.isMobile ) {
                 this.voiceEl.on('touchstart', function(){
+                    if( self.disabled ) return;
                     self.voiceEl.addClass('on');
                     self.voice.start({ autoRestart: false, continous : false });
                 });

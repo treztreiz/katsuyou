@@ -403,6 +403,10 @@ button, input, optgroup, select, textarea {
     margin : 0;
 }
 
+#continue .btn-large {
+    display: none;
+}
+
 #continue .btn:not(:hover), #configure:not(:hover) {
     box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
 }
@@ -556,5 +560,18 @@ button, input, optgroup, select, textarea {
     }
     #voice i {
         font-size: 4rem;
+    }
+    #continue .btn-large {
+        display: inline-block;
+        color: white;
+    }
+    #continue .btn-flat {
+        display: none;
+    }
+    #word.zooming {
+        transform: scale(1.3);
+    }
+    #conjugaison span.zooming i {
+        transform: scale(1.5);
     }
 }
