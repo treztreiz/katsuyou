@@ -4,7 +4,7 @@ class Katsuyou {
 
         const self = this;
 
-        this.isMobile = true;
+        this.isMobile = this.isMobile();
         this.disabled = true;
         this.playing = false;
         this.history = [];
@@ -196,6 +196,10 @@ class Katsuyou {
     onLoad() {
         this.loaderEl.fadeOut();
         this.homeActionsEl.fadeIn();
+    }
+
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     // Init elements ____________________________________________________________________________________________________________
@@ -390,8 +394,8 @@ class Katsuyou {
 
         if(!correct) {
             this.input = this.inputEl.val().replace(/n/g, 'ん'); // Allows n => ん
-            const kana = this.answer.reading.replace(/\//g, '|'), kanji = this.answer.word.replace(/\//g, '|');
-            const regex = new RegExp('^(' + kana + '|' + kanji + ')$'); // Allows multi answers
+            const kana = this.answer.reading.replace(/\//g, '|'), kanji = this.answer.word.replace(/\//g, '|'), kanjikana = kanji.replace('下', 'くだ');
+            const regex = new RegExp('^(' + kana + '|' + kanji + '|' + kanjikana + ')$'); // Allows multi answers
             if(phrases) {
 
                 let success = false;
