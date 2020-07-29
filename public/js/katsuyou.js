@@ -559,7 +559,7 @@ class Katsuyou {
 
     initVoice() {
 
-        this.autoVoice = true;
+        this.autoVoice = false;
         this.voiceEl = $('#voice');
 
         if (annyang) {
@@ -589,9 +589,9 @@ class Katsuyou {
             });
 
             if( !this.autoVoice ) {
-                this.voiceEl.on('click', function(){
-                    console.log('click');
-                    self.voice.start({ continous : false });
+                this.voiceEl.on('mousedown', function(){
+                    self.voiceEl.addClass('on');
+                    self.voice.start({ autoRestart: false, continous : false });
                 });
             }
             
