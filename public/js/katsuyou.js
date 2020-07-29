@@ -4,6 +4,7 @@ class Katsuyou {
 
         const self = this;
 
+        this.isMobile = true;
         this.disabled = true;
         this.playing = false;
         this.history = [];
@@ -228,6 +229,9 @@ class Katsuyou {
             self.start();
         });
         
+
+        if(this.isMobile) $('label[for="input"]').attr('for','false');
+
         // Input
         this.inputEl = $('#input');
         wanakana.bind(this.inputEl[0]);
@@ -245,7 +249,8 @@ class Katsuyou {
         this.continueEl.find('button').on('click', function() {
             //clearInterval( self.timeout );
             $(this).parent().hide().removeClass('empty-input');
-            self.inputEl.attr('disabled', false).show().focus();
+            self.inputEl.attr('disabled', false).show();
+            if( !this.isMobile ) self.inputEl.focus();
             if( self.disabled ) self.generate();
         });
 
@@ -460,7 +465,7 @@ class Katsuyou {
             }
             if( !zoom) this.toAnimate = [];
         }
-        if( !zoom && !this.disabled ) this.inputEl.focus();
+        if( !zoom && !this.disabled && !this.isMobile ) this.inputEl.focus();
     }
 
     animateAward() {
@@ -498,7 +503,7 @@ class Katsuyou {
 
     speak() {
         var self = this;
-        if(this.settings.voice && this.autoVoice) this.voice.abort();
+        if(this.settings.voice && !this.isMobile) this.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
@@ -506,7 +511,7 @@ class Katsuyou {
             },
             onend : () => {
                 self.animateZoom(false);
-                if(self.settings.voice && self.autoVoice) self.voice.resume();
+                if(self.settings.voice && !self.isMobile) self.voice.resume();
             },
         });
     }
@@ -559,14 +564,13 @@ class Katsuyou {
 
     initVoice() {
 
-        this.autoVoice = false;
         this.voiceEl = $('#voice');
 
         if (annyang) {
 
             this.voice = annyang;
             this.voice.setLanguage('ja');
-            if( this.settings.voice && this.autoVoice ) this.voice.start({ continuous : false });
+            if( this.settings.voice && !this.isMobile ) this.voice.start({ continuous : false });
 
             const self = this;
             this.voice.addCommands({
@@ -588,8 +592,8 @@ class Katsuyou {
                 self.voiceEl.removeClass('on');
             });
 
-            if( !this.autoVoice ) {
-                this.voiceEl.on('mousedown', function(){
+            if( this.isMobile ) {
+                this.voiceEl.on('touchstart', function(){
                     self.voiceEl.addClass('on');
                     self.voice.start({ autoRestart: false, continous : false });
                 });
