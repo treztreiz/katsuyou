@@ -500,6 +500,7 @@ class Katsuyou {
     speak() {
         var self = this;
         self.speaking = true;
+        self.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
@@ -507,6 +508,7 @@ class Katsuyou {
             },
             onend : () => {
                 self.speaking = false;
+                self.voice.resume();
                 //setTimeout( () => self.speaking = false, 1000 );
                 self.animateZoom(false);
             },

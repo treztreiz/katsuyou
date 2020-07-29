@@ -491,10 +491,10 @@ button, input, optgroup, select, textarea {
 }
 #voice.on .voice-on {
     display: block;
+    color: var(--main);
 }
 #voice.on {
     transform: scale(1.5);
-    color: var(--main);
 }
 
 
