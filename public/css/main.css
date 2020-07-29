@@ -568,7 +568,7 @@ button, input, optgroup, select, textarea {
         display: block;
         color: var(--dark-grey);
     }
-    #voice.on .voice-off {
+    #voice .voice-off {
         display: none;
     }
     #continue .btn-large {
