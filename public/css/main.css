@@ -259,6 +259,7 @@ button, input, optgroup, select, textarea {
 
 #configure {
     margin-top: 13px;
+    width: 100%;
 }
 
 #configure span {
@@ -516,6 +517,7 @@ button, input, optgroup, select, textarea {
 }
 
 #voice {
+    height: 30px;
     transition: transform .3s;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -569,9 +571,9 @@ button, input, optgroup, select, textarea {
         display: none;
     }
     #word.zooming {
-        transform: scale(1.3);
+        transform: scale(1.2);
     }
     #conjugaison span.zooming i {
-        transform: scale(1.5);
+        transform: scale(1.4);
     }
 }
