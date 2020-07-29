@@ -512,8 +512,13 @@ button, input, optgroup, select, textarea {
 }
 
 #voice {
-    height: 30px;
     transition: transform .3s;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
 }
 #voice .voice-on, #voice.on .voice-off {
     display: none;
@@ -548,5 +553,8 @@ button, input, optgroup, select, textarea {
     }
     #definition {
         width: 80%;
+    }
+    #voice i {
+        font-size: 4rem;
     }
 }

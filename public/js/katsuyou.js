@@ -250,7 +250,7 @@ class Katsuyou {
             //clearInterval( self.timeout );
             $(this).parent().hide().removeClass('empty-input');
             self.inputEl.attr('disabled', false).show();
-            if( !this.isMobile ) self.inputEl.focus();
+            if( !self.isMobile ) self.inputEl.focus();
             if( self.disabled ) self.generate();
         });
 
@@ -438,7 +438,8 @@ class Katsuyou {
         this.updateHistory(true);
         this.verbEl.attr('data-status', 'success');
         this.inputEl.hide().val("").attr('disabled',true);
-        this.continueEl.show().find('button').focus();
+        this.continueEl.show();
+        if( !this.isMobile ) this.continueEl.find('button').focus();
         this.animateAward();
     }
 
@@ -447,7 +448,8 @@ class Katsuyou {
         this.updateHistory(false);
         this.verbEl.attr('data-status', 'error');
         this.inputEl.attr('disabled',true).hide();
-        this.continueEl.show().find('button').focus();
+        this.continueEl.show();
+        if( !this.isMobile ) this.continueEl.find('button').focus();
     }
 
     // Animation ____________________________________________________________________________________________________________ 
