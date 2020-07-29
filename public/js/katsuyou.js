@@ -243,8 +243,8 @@ class Katsuyou {
         this.continueEl = $('#continue');
         this.continueEl.find('button').on('click', function() {
             //clearInterval( self.timeout );
-            $(this).parent().css('opacity', 0).removeClass('empty-input');
-            self.inputEl.attr('disabled', false).focus();
+            $(this).parent().hide().removeClass('empty-input');
+            self.inputEl.attr('disabled', false).show().focus();
             if( self.disabled ) self.generate();
         });
 
@@ -431,8 +431,8 @@ class Katsuyou {
         this.score.success++;
         this.updateHistory(true);
         this.verbEl.attr('data-status', 'success');
-        this.inputEl.val("").attr('disabled',true);
-        this.continueEl.css('opacity', 1).addClass('empty-input').find('button').focus();
+        this.inputEl.hide().val("").attr('disabled',true);
+        this.continueEl.show().find('button').focus();
         this.animateAward();
     }
 
@@ -440,9 +440,8 @@ class Katsuyou {
         this.score.error++;
         this.updateHistory(false);
         this.verbEl.attr('data-status', 'error');
-        this.inputEl.attr('disabled',true);
-        this.continueEl.css('opacity', 1).find('button').focus();
-        if( this.inputEl.val() == "" ) this.continueEl.addClass('empty-input');
+        this.inputEl.attr('disabled',true).hide();
+        this.continueEl.show().find('button').focus();
     }
 
     // Animation ____________________________________________________________________________________________________________ 
@@ -473,7 +472,6 @@ class Katsuyou {
     // Audio ____________________________________________________________________________________________________________
     initSpeakBtn() {
         const self = this;
-        this.speaking = false;
         this.speakBtnEl = $('#speak');
         this.speakBtnEl.on('click', () => self.speak() );
     }
@@ -499,18 +497,15 @@ class Katsuyou {
 
     speak() {
         var self = this;
-        self.speaking = true;
-        self.voice.abort();
+        this.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
                 self.animateZoom(true);
             },
             onend : () => {
-                self.speaking = false;
-                self.voice.resume();
-                //setTimeout( () => self.speaking = false, 1000 );
                 self.animateZoom(false);
+                self.voice.resume();
             },
         });
     }
@@ -571,14 +566,14 @@ class Katsuyou {
             });
             
             this.voice.addCallback('resultNoMatch', function(phrases) {
-                if(!self.disabled && !self.speaking && self.playing) {
+                if(!self.disabled && self.playing) {
                     self.inputEl.val(phrases[0]);
                     self.checkAnswer(phrases);
                 }
             });
 
             this.voice.addCallback('soundstart', function() {
-                if(!self.speaking) $('#voice').addClass('on');
+                $('#voice').addClass('on');
             });
 
             this.voice.addCallback('end', function() {
@@ -599,7 +594,7 @@ class Katsuyou {
 
     updateVoice() {
         const commands = {}, self = this;
-        commands[this.answer.reading] = () => { if(!self.disabled && !self.speaking && self.playing) self.checkAnswer(null, true); };
+        commands[this.answer.reading] = () => { if(!self.disabled && self.playing) self.checkAnswer(null, true); };
         this.clearVoice();
         this.voice.addCommands(commands);
     }

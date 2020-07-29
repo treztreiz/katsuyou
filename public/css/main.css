@@ -37,6 +37,11 @@ button, input, optgroup, select, textarea {
     background: var(--main);
 }
 
+.btn-flat {
+    border: 1px solid var(--light-grey);
+}
+
+
 .japanese {
     font-family: 'Kosugi Maru', sans-serif;
 }
@@ -56,6 +61,10 @@ button, input, optgroup, select, textarea {
     position: relative;
     z-index: 2;
 }
+#menu .btn-flat, .sidenav .btn-flat {
+    border: none;
+}
+
 .logo {
     display: inline-block;
     padding: 7px;
@@ -357,15 +366,31 @@ button, input, optgroup, select, textarea {
     width: 100px;
 }
 
+#user-inputs {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#form {
+    width: 100%;
+}
+
 #input {
     text-align : center;
     border : 0;
     box-shadow: none;
     font-size: 3rem;
-    margin-top: 20px;
+    margin: 0;
     color: var(--main);
     margin-bottom: 0;
     color: black;
+}
+#input::placeholder {
+    font-family: Nunito;
+    font-size: 1.3rem;
 }
 
 #input[disabled] {
@@ -373,9 +398,13 @@ button, input, optgroup, select, textarea {
 }
 
 #continue {
-    opacity: 0;
+    display: none;
     height: 45px;
-    margin-top: 10px;
+    margin : 0;
+}
+
+#continue .btn:not(:hover), #configure:not(:hover) {
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
 }
 
 #continue.empty-input {

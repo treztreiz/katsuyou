@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div id="home-actions">
-                        <div><button id="start" class="btn btn-large start-btn">Start my training session</button></div>
+                        <div><button id="start" class="btn btn-large start-btn z-depth-5">Start my training session</button></div>
                         <p>or</p>
                         <div><button id="configure" class="btn btn-flat sidenav-trigger" data-target="settings-sidenav">configure my training</button></div>
                     </div>
@@ -67,12 +67,11 @@
                 <div class="conjugaison-infos"><span id="negation"><i class="material-icons neg">do_not_disturb</i><i class="material-icons pos">check_circle</i><span class="conjugaison-text"></span></span><span id="tense"><i class="material-icons">live_help</i><span class="conjugaison-text"></span></span><span id="formality"><i class="material-icons neg">sms_failed</i><i class="material-icons pos">sms</i><span class="conjugaison-text"></span></span></div>
                 <div id="timer" class="progress"><div class="determinate" style="width: 0%"></div></div>
             </div>
-            <form id="form"><input id="input" type="text" class="japanese"></form>
-            {# <button id="voice-btn">record</button> #}
-            <div id="continue"><button class="btn btn-flat">Continue (or press enter)</button></div>
-
+            <div id="user-inputs">
+                <form id="form"><input id="input" type="text" class="japanese" placeholder="answer here or use your voice"></form>
+                <div id="continue"><button class="btn btn-flat">Press here or say 「 つぎ 」</button></div>
+            </div>
             <div id="voice"><i class="material-icons voice-off">mic_off</i><i class="material-icons voice-on">mic</i></div>
-
         </div>
 
     </div>
