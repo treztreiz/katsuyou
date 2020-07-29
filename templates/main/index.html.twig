@@ -8,7 +8,7 @@
         <div id="menu">
             <span class="japanese logo">活用</span>
             <button id="settings-btn" class="btn btn-flat sidenav-trigger" data-target="settings-sidenav"><i class="material-icons">settings</i></button>
-            <button id="study-btn" class="btn btn-flat sidenav-trigger" data-target="study-sidenav" disabled><i class="material-icons">school</i></button>
+            <button id="study-btn" class="btn btn-flat" disabled><i class="material-icons">school</i></button>
             <button class="btn btn-flat" id="speak" disabled><i class="material-icons">volume_up</i></button>
         </div>
 
@@ -81,6 +81,6 @@
 </label>
 
 {% include 'main/settings.html.twig' %}
-{% include 'main/study.html.twig' %}
+{# {% include 'main/study.html.twig' %} #}
 
 {% endblock %}

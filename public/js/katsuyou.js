@@ -181,7 +181,7 @@ class Katsuyou {
             }, data => {
                 self.settings = data;
                 if( param == "timer" ) self.updateTimer( el );
-                if( param == "voice" ) self.toggleVoice();
+                if( param == "voice" && !this.isMobile ) self.toggleVoice();
             }).fail( err => console.error(err) );
 
         });
