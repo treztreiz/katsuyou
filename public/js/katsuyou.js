@@ -5,7 +5,9 @@ class Katsuyou {
         const self = this;
 
         this.disabled = true;
+        this.playing = false;
         this.history = [];
+        this.score = { success : 0, error : 0 };
 
         // Init conjugation
         this.conjugator = new(JsLingua.getService("Morpho", 'jpn'))();
@@ -16,9 +18,10 @@ class Katsuyou {
 
         // Init elements
         this.initSessionElements();
-        this.initUserInput();
+        this.initUserInputs();
         this.initSpeakBtn();
         this.initTimer();
+        this.initVoice();
 
     }
 
@@ -28,7 +31,8 @@ class Katsuyou {
         this.initTenses( data.tenses );
         this.initSettings( data.settings );
         this.initSettingsInputs();
-        this.generate();
+        this.initTimer();
+        this.onLoad();
     }
 
     initTenses(tenses) {
@@ -47,18 +51,74 @@ class Katsuyou {
  
     initVerbs(verbs) {
 
-        this.verbs = verbs, this.verbsEl = $('#verbs-settings'), this.verbsTpl = $('#verbs-template');
+        this.verbs = {}, this.verbsEl = $('#verbs-settings'), this.verbsTpl = $('#verbs-template');
         for( let v in  verbs ) {
             const verb = verbs[v];
+            this.verbs[verb.id] = verb;
             this.verbsEl.append($(
                 this.verbsTpl.html()
-                .replace('#id#', v)
+                .replace('#id#', verb.id)
+                .replace('#id#', verb.id)
                 .replace('#word#', verb.word)
                 .replace('#furigana#', verb.reading)
                 .replace('#romaji#', verb.romaji)
                 .replace('#type#', verb.type)
-                .replace('#definition#', verb.definition)
+                .replace('#definition#', '「 ' + verb.definition + ' 」')
             ));
+        }
+
+        const self = this;
+
+        this.searchEl = $('#search'), this.search = "";
+        this.searchEl.on('keyup', function() {
+            self.search = $(this).val();
+            self.searchVerb();
+        });
+
+        this.searchTypeEl = $('#search-type'), this.searchType = false;
+        this.searchTypeEl.on('change', function() {
+            const type = $(this).val();
+            type == "false" ? self.searchType = false : self.searchType = type;
+            self.searchVerb();
+        });
+
+        this.searchSelectedEl = $('#search-selected'), this.searchSelected = false;
+        this.searchSelectedEl.on('change', function() {
+            const selected = $(this).val();
+            selected == "false" ? self.searchSelected = false : self.searchSelected = selected;
+            self.searchVerb();
+        });
+
+    }
+
+    searchVerb() {
+
+        const search = new RegExp(this.search.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&'), "g");
+
+        for( let v in this.verbs ) {
+
+            const verb = this.verbs[v], verbEl = $('.verb-item[data-id="' + verb.id + '"]');
+
+            if( this.searchType && verb.type != this.searchType ) {
+                verbEl.hide();
+                continue;
+            }
+
+            if( this.searchSelected) {
+                const isSelected = this.settings.verbs.includes(parseInt(v));
+                if( this.searchSelected == 'selected' && !isSelected || this.searchSelected == 'unselected' && isSelected ) {
+                    verbEl.hide();
+                    continue;
+                }
+            }
+
+            if( this.search == "" ) {
+                verbEl.show();
+                continue;
+            }
+            
+            !verb.romaji.match(search) && !verb.word.match(search) && !verb.reading.match(search) && !verb.definition.match(search) ? verbEl.hide() : verbEl.show();
+            
         }
 
     }
@@ -85,6 +145,13 @@ class Katsuyou {
                     break;
                 }
 
+                case 'timer' : {
+                    const setting = $('.settings-input[name="' + s + '"][value="' + settings[s] + '"]');
+                    setting.attr('checked', true);
+                    if(!settings[s]) this.updateTimer( setting) ;
+                    break;
+                }
+
                 default : {
                     const setting = $('.settings-input[name="' + s + '"]');
                     if(settings[s]) setting.attr('checked', true);
@@ -101,16 +168,18 @@ class Katsuyou {
         const self = this, url = Routing.generate('settings.update');
         $('.settings-input').on('change', function() {
 
-            const param = $(this).attr('name');
-            const value = param == "verbs" || param == "tenses" || $(this).is('[type="radio"]') ? $(this).val() : $(this).is(':checked');
+            const el = $(this);
+            const param = el.attr('name');
+            const value = param == "verbs" || param == "tenses" || el.is('[type="radio"]') ? el.val() : el.is(':checked');
             
-            if( $(this).hasClass('display-input') ) self.updateDisplay( $(this) );
+            if( el.hasClass('display-input') ) self.updateDisplay( el );
 
             $.post(url, {
                 param : param,
                 value : value
             }, data => {
                 self.settings = data;
+                if( param == "timer" ) self.updateTimer( el );
             }).fail( err => console.error(err) );
 
         });
@@ -122,22 +191,41 @@ class Katsuyou {
         setting.is(':checked') ? el.removeClass('hidden') : el.addClass('hidden');
     }
 
+    onLoad() {
+        this.loaderEl.fadeOut();
+        this.homeActionsEl.fadeIn();
+    }
+
     // Init elements ____________________________________________________________________________________________________________
     initSessionElements() {
+        this.sessionEl = $('#session-container');
+        this.homeEl = $('#home-container');
+        this.homeActionsEl = $('#home-actions');
+        this.configurationMissingEl = $('#configuration-missing');
+        this.loaderEl = $('#loader');
         this.verbEl = $('#verb');
         this.furiganaEl = $('#furigana');
         this.romajiEl = $('#romaji');
-        this.wordEl = $('#word'), this.wordEl.fitText(1, { maxFontSize: '70px' });
+        this.wordEl = $('#word');
         this.typeEl = $('#type');
         this.negationEl = $('#negation'), this.negationTextEl = this.negationEl.find('.conjugaison-text');
         this.tenseEl = $('#tense'), this.tenseTextEl = this.tenseEl.find('.conjugaison-text');
         this.formalityEl = $('#formality'), this.formalityTextEl = this.formalityEl.find('.conjugaison-text');
         this.definitionEl = $('#definition');
+        this.successEl = $('#success');
+        this.errorEl = $('#error');
+        this.awardEl = $('#award');
     }
 
-    initUserInput() {
+    initUserInputs() {
 
         const self = this;
+
+        this.startEl = $('.start-btn');
+        this.startEl.on('click', function(e) {
+            if( self.playing ) return;
+            self.start();
+        });
         
         // Input
         this.inputEl = $('#input');
@@ -163,20 +251,56 @@ class Katsuyou {
     }
 
     // Session logic ____________________________________________________________________________________________________________
+    stop(missing = true) {
+        this.playing = false;
+        this.clearTimer();
+        this.sessionEl.hide();
+        this.homeEl.show();
+        this.speakBtnEl.attr('disabled', true);
+        if( missing ) {
+            this.homeActionsEl.hide();
+            this.configurationMissingEl.show();
+        } else {
+            this.homeActionsEl.show();
+            this.configurationMissingEl.hide();
+        }
+    }
+
+    start() {
+        this.playing = true;
+        this.clearTimer();
+        this.homeActionsEl.fadeOut();
+        this.configurationMissingEl.fadeOut();
+        this.loaderEl.fadeIn();
+        const self = this;
+        setTimeout( () => {
+            this.speakBtnEl.attr('disabled', false);
+            this.loaderEl.hide();
+            self.sessionEl.show();
+            self.homeEl.hide();
+            self.wordEl.fitText(1, { maxFontSize: '70px' });
+            self.generate();
+        }, 1000);
+       
+    }
+    
     getRandomValue(attribute) {
         return this.settings[attribute][ Math.floor( Math.random() * this.settings[attribute].length ) ];
     }
 
     generate() {
 
+        this.verb = this.verbs[ this.getRandomValue('verbs') ];
+        this.tense = this.tenses[ this.getRandomValue('tenses') ];
+
+        if( null == this.verb || null == this.tense ) return this.stop();
+
         this.disabled = false;
         this.verbEl.attr('data-status', null);
 
-        this.verb = this.verbs[ this.getRandomValue('verbs') ];
-        this.tense = this.tenses[ this.getRandomValue('tenses') ];
         this.formality = 'formality' in this.tense ? this.tense.formality : this.getRandomValue('formality');
         this.negation = 'negation' in this.tense ? this.tense.negation : this.getRandomValue('negation');
-        this.generateAudio( this.verb.reading );
+        this.generateAudio( this.verb.reading ); 
 
         const conjugation = { vtype: this.verb.type, formality : this.formality, negated : this.negation, ...this.tense.conjugation };
         const word = this.conjugator.conjugate(this.verb.word, conjugation);
@@ -189,6 +313,7 @@ class Katsuyou {
             romaji : romaji
         };
 
+        this.updateVoice();
         this.display();
         this.startTimer();
 
@@ -197,7 +322,11 @@ class Katsuyou {
     display(answer = false) {
 
         if( !answer ) this.inputEl.val("");
-
+        else {
+            this.successEl.text( this.score.success );
+            this.errorEl.text( this.score.error );
+        }
+        
         this.romajiEl.text( answer ?  this.answer.romaji : this.verb.romaji );
         this.furiganaEl.text( answer ? this.answer.reading : this.verb.reading );
         this.wordEl.text( answer ? this.answer.word : this.verb.word );
@@ -235,7 +364,7 @@ class Katsuyou {
             this.toAnimate.push(this.tenseEl);
         }
 
-        if( this.settings.sound ) this.speak();
+        this.settings.sound ? this.speak() : this.animate();
 
     }
 
@@ -251,14 +380,47 @@ class Katsuyou {
         });
     }
 
-    checkAnswer() {
+    checkAnswer(phrases = false, correct = false) {
+
+        if(!correct) {
+            this.input = this.inputEl.val().replace(/n/g, 'ん'); // Allows n => ん
+            const kana = this.answer.reading.replace(/\//g, '|'), kanji = this.answer.word.replace(/\//g, '|');
+            const regex = new RegExp('^(' + kana + '|' + kanji + ')$'); // Allows multi answers
+            if(phrases) {
+
+                let success = false;
+                for( var i = 0; i < phrases.length; i++) {
+                    if( regex.exec(phrases[i]) !== null ) success = true;
+                }
+                if( !success ) return;
+                
+                this.clearVoice();
+                this.success();
+
+            } else {
+                this.clearVoice();
+                regex.exec(this.input) === null ? this.error() : this.success();
+            }
+
+        } else {
+            this.clearVoice();
+            this.success();
+        }
 
         this.disabled = true;
         this.clearTimer();
-        this.input = this.inputEl.val().replace(/n/g, 'ん'); // Allows n => ん
 
-        const regex = new RegExp('^' + this.answer.reading.replace(/\//g, '|') + '$'); // Allows multi answers
-        regex.exec(this.input) !== null ? this.success() : this.error();
+        // this.input = this.inputEl.val().replace(/n/g, 'ん'); // Allows n => ん
+        
+        // const kana = this.answer.reading.replace(/\//g, '|'), kanji = this.answer.word.replace(/\//g, '|');
+        // const regex = new RegExp('^(' + kana + '|' + kanji + ')$'); // Allows multi answers
+
+        // if( regex.exec(this.input) === null ) {
+        //     if(voice) return;
+        //     this.error();
+        // } else {
+        //     this.success(); 
+        // }
 
         this.generateAudio(this.answer.reading);
         this.display(true);
@@ -266,13 +428,16 @@ class Katsuyou {
     }
 
     success() {
+        this.score.success++;
         this.updateHistory(true);
         this.verbEl.attr('data-status', 'success');
         this.inputEl.val("").attr('disabled',true);
         this.continueEl.css('opacity', 1).addClass('empty-input').find('button').focus();
+        this.animateAward();
     }
 
     error() {
+        this.score.error++;
         this.updateHistory(false);
         this.verbEl.attr('data-status', 'error');
         this.inputEl.attr('disabled',true);
@@ -280,11 +445,37 @@ class Katsuyou {
         if( this.inputEl.val() == "" ) this.continueEl.addClass('empty-input');
     }
 
+    // Animation ____________________________________________________________________________________________________________ 
+    animate() {
+        const self = this;
+        this.animateZoom(true);
+        setTimeout( () => self.animateZoom(false), 600);
+    }
+
+    animateZoom(zoom) {
+        zoom ? this.wordEl.addClass('zooming') : this.wordEl.removeClass('zooming');
+        if( this.toAnimate.length ) {
+            for( var i = 0; i < this.toAnimate.length; i++ ) {
+                zoom ? this.toAnimate[i].addClass('zooming') : this.toAnimate[i].removeClass('zooming');
+            }
+            if( !zoom) this.toAnimate = [];
+        }
+        if( !zoom && !this.disabled ) this.inputEl.focus();
+    }
+
+    animateAward() {
+        var award = this.awardEl;
+        award.fadeIn(400, function(){
+            setTimeout( () => award.fadeOut(400, () => award.removeClass('animated') ), 1000 );
+        }).addClass('animated');
+    }
+
     // Audio ____________________________________________________________________________________________________________
     initSpeakBtn() {
         const self = this;
-        this.speakBtn = $('#speak');
-        this.speakBtn.on('click', () => self.speak() );
+        this.speaking = false;
+        this.speakBtnEl = $('#speak');
+        this.speakBtnEl.on('click', () => self.speak() );
     }
 
     generateAudio(verb) {
@@ -308,46 +499,40 @@ class Katsuyou {
 
     speak() {
         var self = this;
+        self.speaking = true;
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
-                self.wordEl.addClass('zooming');
-                if( self.toAnimate.length ) {
-                    for( var i = 0; i < self.toAnimate.length; i++ ){
-                        self.toAnimate[i].addClass('zooming');
-                    }
-                }
+                self.animateZoom(true);
             },
             onend : () => {
-                self.wordEl.removeClass('zooming');
-                if( self.toAnimate.length ) {
-                    for( var i = 0; i < self.toAnimate.length; i++ ){
-                        self.toAnimate[i].removeClass('zooming');
-                    }    
-                    self.toAnimate = [];
-                }
-                if(!self.disabled) self.inputEl.focus();
+                self.speaking = false;
+                //setTimeout( () => self.speaking = false, 1000 );
+                self.animateZoom(false);
             },
         });
     }
 
     // Timer ____________________________________________________________________________________________________________
     initTimer() {
+        this.timerEl = $('#timer');
         this.timer = {
             el : $('#timer .determinate'),
             interval : null,
-            time : 0,
-            maxTime : 10000
+            maxTime : null,
+            time : 0
         };
     }
 
     startTimer() {
-        const self = this, timer = this.timer;
+        const maxTime = this.settings.timer, self = this, timer = this.timer, delay = 500;
+        if(!maxTime) return;
+        timer.maxTime = maxTime - delay;
         timer.interval = setInterval( function(){
             timer.time += 10;
             const width = Math.floor(timer.time / timer.maxTime * 100);
             timer.el.css('width', width + '%');
-            if( timer.time >= timer.maxTime ) self.checkAnswer();
+            if( timer.time >= timer.maxTime + delay ) self.checkAnswer();
         }, 10 );
     }
 
@@ -356,6 +541,65 @@ class Katsuyou {
         clearInterval( timer.interval );
         timer.time = 0;
         timer.el.css('width', 0);
+    }
+
+    updateTimer(setting) {
+        this.clearTimer();
+        if(setting.val() == "false" ) {
+            this.timerEl.addClass('hidden');
+        } else {
+            this.timerEl.removeClass('hidden');
+            if( !this.disabled ) this.startTimer();
+        }
+        setting.val() !== "false" ? this.timerEl.removeClass('hidden') : this.timerEl.addClass('hidden');
+    }
+
+    // Voice ____________________________________________________________________________________________________________
+    initVoice() {
+
+        if (annyang) {
+
+            this.voice = annyang;
+            this.voice.setLanguage('ja');
+            this.voice.start();
+
+            const self = this;
+            this.voice.addCommands({
+                'つぎ' : () => { self.continueEl.find('button').trigger('click'); }
+            });
+            
+            this.voice.addCallback('resultNoMatch', function(phrases) {
+                if(!self.disabled && !self.speaking && self.playing) {
+                    self.inputEl.val(phrases[0]);
+                    self.checkAnswer(phrases);
+                }
+            });
+
+            this.voice.addCallback('soundstart', function() {
+                if(!self.speaking) $('#voice').addClass('on');
+            });
+
+            this.voice.addCallback('end', function() {
+                $('#voice').removeClass('on');
+            });
+            
+        } else {
+            console.error( 'Browser not supported for voice recognition' );
+        }
+
+    }
+
+    clearVoice() {
+        if(this.history.length) {
+            this.voice.removeCommands( this.history[0].answer.reading );
+        }
+    }
+
+    updateVoice() {
+        const commands = {}, self = this;
+        commands[this.answer.reading] = () => { if(!self.disabled && !self.speaking && self.playing) self.checkAnswer(null, true); };
+        this.clearVoice();
+        this.voice.addCommands(commands);
     }
 
 }

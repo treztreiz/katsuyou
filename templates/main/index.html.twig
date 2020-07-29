@@ -8,12 +8,56 @@
         <div id="menu">
             <span class="japanese logo">活用</span>
             <button id="settings-btn" class="btn btn-flat sidenav-trigger" data-target="settings-sidenav"><i class="material-icons">settings</i></button>
-            <button id="study-btn" class="btn btn-flat sidenav-trigger" data-target="study-sidenav"><i class="material-icons">school</i></button>
-            <button class="btn btn-flat" id="speak"><i class="material-icons">volume_up</i></button>
+            <button id="study-btn" class="btn btn-flat sidenav-trigger" data-target="study-sidenav" disabled><i class="material-icons">school</i></button>
+            <button class="btn btn-flat" id="speak" disabled><i class="material-icons">volume_up</i></button>
+        </div>
+
+        <div id="score">
+            <div><span class="japanese">正解</span>
+                <div id="success" class="success">0</div>
+            </div>
+            <div><span class="japanese">不正解</span>
+                <div id="error" class="error">0</div>
+            </div>
+        </div>
+
+        <div id="home-container">
+            <div>
+                <span class="logo"><span class="japanese">活用</span></span>
+                <h1 style="display: none;"><b>katsuyou</b> training</h1>
+
+                <div id="home-wrapper">
+                    <div id="loader">
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="home-actions">
+                        <div><button id="start" class="btn btn-large start-btn">Start my training session</button></div>
+                        <p>or</p>
+                        <div><button id="configure" class="btn btn-flat sidenav-trigger" data-target="settings-sidenav">configure my training</button></div>
+                    </div>
+                    <div id="configuration-missing">
+                        <div class="masaka"><span class="japanese">まさか . . .</span> (´⊙◞⊱◟⊙｀)</div>
+                        <div class="text">You've configured no tense or verb for your session !<br>Please configure at least one of each.</div>
+                        <button class="btn btn-flat sidenav-trigger" data-target="settings-sidenav">configure</button> <button class="btn start-btn">Retry</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         <div id="session-container">
             <div id="verb">
+                <div id="award">+1</div>
                 <div id="reading"><div id="romaji"></div><div id="furigana" class="japanese"></div></div>
                 <div id="word" class="japanese"></div>
                 <div id="type"></div>
@@ -24,7 +68,11 @@
                 <div id="timer" class="progress"><div class="determinate" style="width: 0%"></div></div>
             </div>
             <form id="form"><input id="input" type="text" class="japanese"></form>
-            <div id="continue"><button class="btn btn-flat">Continue</button></div>
+            {# <button id="voice-btn">record</button> #}
+            <div id="continue"><button class="btn btn-flat">Continue (or press enter)</button></div>
+
+            <div id="voice"><i class="material-icons voice-off">mic_off</i><i class="material-icons voice-on">mic</i></div>
+
         </div>
 
     </div>

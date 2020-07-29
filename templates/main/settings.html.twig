@@ -12,6 +12,9 @@
         <li><a href="#" class="sidenav-item sidenav-trigger" data-target="display-sidenav"><i
                     class="material-icons">translate</i>Display<i
                     class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="timer-sidenav"><i
+                    class="material-icons">access_time</i>Timer<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
         <li><a href="#" class="sidenav-item sidenav-trigger" data-target="sound-sidenav"><i
                     class="material-icons">volume_up</i>Sound<i
                     class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
@@ -77,16 +80,30 @@
 
     <div class="sidenav-title"><i class="material-icons">speaker_notes</i>Verbs</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
     
-    <ul id="verbs-settings"></ul>
+    <ul id="verbs-settings">
+        <li class="sidenav-item" id="search-container">
+            <input id="search" type="text" placeholder="search for a verb">
+            <select id="search-type">
+                <option value="false">All types</option>
+                <option value="ichidan">Ichidan</option>
+                <option value="godan">Godan</option>
+                <option value="suru-kuru">Suru-kuru</option>
+            </select>
+            <select id="search-selected">
+                <option value="false">All selection</option>
+                <option value="selected">Selected</option>
+                <option value="unselected">Unselected</option>
+            </select>
+        </li>
+    </ul>
     <div id="verbs-template" class="settings-template">
-        <li class="sidenav-item verb-item">
+        <li class="sidenav-item verb-item" data-id="#id#">
             <label>
                 <input class="filled-in settings-input" name="verbs" value="#id#" type="checkbox">
                 <span>
                     <div class="verb-item-word japanese">#word#</div>
-                    <div class="verb-item-reading"><span class="verb-item-furigana japanese">#furigana#</span> <span class="verb-item-romaji">(#romaji#)</span></div>
-                    <div class="verb-item-type">#type#</div>
-                    <div class="verb-item-definition">#definition#</div>
+                    <div class="verb-item-reading"><span class="verb-item-furigana japanese">#furigana#</span> \ <span class="verb-item-romaji">#romaji#</span> \ <span class="verb-item-type">#type# verb</span></div>
+                    <span class="verb-item-definition">#definition#</span>
                 </span>
             </label>
         </li>
@@ -123,6 +140,43 @@
                     <input name="definition" class="filled-in settings-input display-input" type="checkbox" />
                     <span>Show definition</span>
                 </label>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+<div id="timer-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">access_time</i>Timer</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+    
+    <ul>
+        <li class="sidenav-item">
+            <div id="timer-settings">
+                <div>
+                    <label>
+                        <input class="settings-input" name="timer" type="radio" value="false" />
+                        <span>No timer</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input class="settings-input" name="timer" type="radio" value="20000" />
+                        <span>20 seconds</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input class="settings-input" name="timer" type="radio" value="10000" />
+                        <span>10 seconds</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input class="settings-input" name="timer" type="radio" value="5000" />
+                        <span>5 seconds</span>
+                    </label>
+                </div>
             </div>
         </li>
     </ul>

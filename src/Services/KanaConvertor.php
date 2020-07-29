@@ -51,7 +51,7 @@ class KanaConvertor {
             'と' => 'to',
             //d
             'だ' => 'da',
-            'づ' => 'du',
+            'づ' => 'zu',
             'で' => 'de',
             'ど' => 'do',
             //n
@@ -194,7 +194,7 @@ class KanaConvertor {
             'ト' => 'to',
             //d
             'ダ' => 'da',
-            'ヅ' => 'du',
+            'ヅ' => 'zu',
             'デ' => 'de',
             'ド' => 'do',
             //n

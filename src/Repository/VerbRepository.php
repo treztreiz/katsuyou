@@ -19,22 +19,14 @@ class VerbRepository extends ServiceEntityRepository
         parent::__construct($registry, Verb::class);
     }
 
-    // /**
-    //  * @return Verb[] Returns an array of Verb objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getVerbs()
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('v.romaji', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Verb

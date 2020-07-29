@@ -1,2 +1,6 @@
 M.AutoInit();
-$(function(){ new Katsuyou(); });
+$(function(){ 
+
+    new Katsuyou(); 
+
+});

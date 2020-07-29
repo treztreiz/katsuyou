@@ -29,6 +29,14 @@ body:before {
     opacity: .7;
 }
 
+button, input, optgroup, select, textarea {
+    font-family: 'Nunito', sans-serif;
+}
+
+.btn:not(.btn-flat) {
+    background: var(--main);
+}
+
 .japanese {
     font-family: 'Kosugi Maru', sans-serif;
 }
@@ -45,6 +53,8 @@ body:before {
     margin-left: 10px;
     margin-top: 10px;
     display: inline-block;
+    position: relative;
+    z-index: 2;
 }
 .logo {
     display: inline-block;
@@ -80,6 +90,11 @@ body:before {
     overflow: hidden;
     background: var(--bg);
 }
+
+.drag-target + .sidenav-overlay {
+    background-color: transparent;
+}
+
 .sidenav > ul {
     overflow: auto;
     position: relative;
@@ -166,6 +181,7 @@ body:before {
 }
 .verb-item-word {
     font-size: 1.3rem;
+    color: var(--main);
 }
 .verb-item-reading, .verb-item-definition, .verb-item-tags, .verb-item-type {
     font-size: 12px;
@@ -184,6 +200,83 @@ body:before {
     display: none;
 }
 
+/** HOME ________________________________________________________________________________________________ **/
+
+#home-container {
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home-container .logo {
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.04), 0 9px 46px 8px rgba(0,0,0,0.02), 0 11px 15px -7px rgba(0,0,0,0.02);
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#home-container .logo .japanese {
+    font-size: 3.6rem;
+}
+#home-container h1 {
+    display: none;
+}
+
+.spinner-blue, .spinner-blue-only {
+    border-color: var(--main);
+}
+
+#home-wrapper {
+    position: relative;
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#start {
+    margin-bottom: 20px;
+}
+
+#configure {
+    margin-top: 13px;
+}
+
+#configure span {
+    margin-left: 10px;
+}
+
+#configuration-missing, #home-actions {
+    display : none;
+    text-align: center;
+    padding: 20px;
+}
+
+.masaka {
+    font-size: 1.5rem;
+    color: var(--main);
+}
+
+#configuration-missing .text {
+    font-size: 1rem;
+    color: var(--light-grey);
+    margin-top: 20px;
+}
+
+#configuration-missing .btn {
+    margin-top: 60px;
+}
+
 /** SESSION ________________________________________________________________________________________________ **/
 
 #session-container {
@@ -193,6 +286,7 @@ body:before {
     transform: translate(-50%,-50%);
     text-align: center;
     width: 100%;
+    display: none;
 }
 
 #reading {
@@ -319,21 +413,95 @@ body:before {
     display: none;
 }
 
-.progress {
+#timer {
     background-color : var(--very-light-grey);
     margin-top: 15px;
+    margin-bottom: 0;
 }
-.progress .determinate {
+#timer .determinate {
     background-color:  var(--main);
 }
 
+#search, .select-wrapper input.select-dropdown, .select-wrapper input.select-dropdown:focus {
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: 0;
+    box-shadow: none;
+    position: relative;
+}
+#search, .select-wrapper:before {
+    background: rgba(0,0,0,0.03);
+}
+.select-wrapper:before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    
+}
+#search::placeholder, .select-wrapper input.select-dropdown  {
+    color: var(--light-grey);
+}
+.dropdown-content {
+    border-radius: 5px;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    color: var(--dark-grey);
+}
+
+#score {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+}
+
+#score > div {
+    display: inline-block;
+    text-align: center;
+    margin-left: 10px;
+}
+#score #success, #score #error {
+    font-size: 30px;
+}
+
+#award {
+    font-size: 1.5rem;
+    top: -40px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top .5s;
+    display: none;
+    /* color: #00c384; */
+}
+#award.animated {
+    top: -60px;
+}
+
+#voice {
+    height: 30px;
+    transition: transform .3s;
+}
+#voice .voice-on, #voice.on .voice-off {
+    display: none;
+}
+#voice.on .voice-on {
+    display: block;
+}
+#voice.on {
+    transform: scale(1.5);
+    color: var(--main);
+}
+
+
 @media only screen and (max-width: 420px) {
-    /* #word {
-        font-size: 3.5rem;
-        line-height: 50px;
-        margin-top: 10px;
-        margin-bottom: 12px;
-    } */
+    #home-container .logo {
+        display: none;
+    }
     #input {
         margin-top: 5px;
         font-size: 2.5rem;

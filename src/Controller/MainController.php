@@ -10,11 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {   
-    private $verbRepository;
+    private $settings;
 
-    public function __construct(VerbRepository $verbRepository)
+    public function __construct(SettingsManager $settings)
     {
-        $this->verbRepository = $verbRepository;
+        $this->settings = $settings;
     }
 
     /**
@@ -30,22 +30,10 @@ class MainController extends AbstractController
      */
     public function load()
     {   
-        // Verbs
-        $verbs = [];
-        foreach( $this->verbRepository->findAll() as $verb ) {
-            $verbs[$verb->getId()] = $verb->getVerb(); 
-        }
-
-        // Tenses
-        $tenses = $this->getParameter('tenses');
-
-        // Settings
-        $settings = new SettingsManager( $this->get('session') );
-
         return $this->json([
-            'verbs' => $verbs,
-            'tenses' => $tenses,
-            'settings' => $settings->retrieve(),
+            'verbs' =>  $this->settings->getVerbs(),
+            'tenses' => $this->settings->getTenses(),
+            'settings' => $this->settings->retrieve(),
         ]);
     }
 
@@ -54,11 +42,10 @@ class MainController extends AbstractController
      */
     public function update(Request $request)
     {   
-        $settings = new SettingsManager( $this->get('session') );
         $param = $request->request->get('param');
         $value = $request->request->get('value');
 
-        $settings = $settings->update($param, $value, $this->verbRepository, $this->getParameter('tenses'));
+        $settings = $this->settings->update($param, $value);
 
         return $settings ? $this->json($settings) : $this->json('Error', 500);
     }
