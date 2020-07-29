@@ -564,6 +564,13 @@ button, input, optgroup, select, textarea {
     #voice i {
         font-size: 4rem;
     }
+    #voice .voice-on {
+        display: block;
+        color: var(--dark-grey);
+    }
+    #voice.on .voice-off {
+        display: none;
+    }
     #continue .btn-large {
         display: inline-block;
         color: white;
