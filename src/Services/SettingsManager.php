@@ -47,7 +47,8 @@ class SettingsManager {
             "type" =>       $this->getSessionParameter('type', false),
             "definition" => $this->getSessionParameter('definition', true),
             "sound" =>      $this->getSessionParameter('sound', true),
-            "timer" =>      $this->getSessionParameter('timer', $this->timer[0])
+            "timer" =>      $this->getSessionParameter('timer', $this->timer[0]),
+            "voice" =>      $this->getSessionParameter('voice', true),
         ];
     }
 

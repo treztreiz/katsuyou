@@ -15,6 +15,9 @@
         <li><a href="#" class="sidenav-item sidenav-trigger" data-target="timer-sidenav"><i
                     class="material-icons">access_time</i>Timer<i
                     class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
+        <li><a href="#" class="sidenav-item sidenav-trigger" data-target="voice-sidenav"><i
+                    class="material-icons">mic</i>Voice<i
+                    class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
         <li><a href="#" class="sidenav-item sidenav-trigger" data-target="sound-sidenav"><i
                     class="material-icons">volume_up</i>Sound<i
                     class="material-icons collapsible-arrow">keyboard_arrow_right</i></a></li>
@@ -178,6 +181,24 @@
                     </label>
                 </div>
             </div>
+        </li>
+    </ul>
+
+</div>
+
+<div id="voice-sidenav" class="sidenav">
+
+    <div class="sidenav-title"><i class="material-icons">mic</i>Voice</a><button class="btn btn-flat sidenav-close sidenav-close-top"><i class="material-icons">keyboard_arrow_left</i></button></div>
+
+    <ul>
+        <li class="sidenav-item" id="voice-settings">
+            <div class="voice-supported">
+                <label>
+                    <input name="voice" class="filled-in settings-input display-input" type="checkbox" />
+                    <span>Enable voice</span>
+                </label>
+            </div>
+            <div class="voice-unsupported">Your browser or machine does not support voice recognition.<br><a href="https://caniuse.com/#feat=speech-recognition" target="_blank">List of supported browsers</a></div>
         </li>
     </ul>
 

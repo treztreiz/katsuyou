@@ -21,7 +21,6 @@ class Katsuyou {
         this.initUserInputs();
         this.initSpeakBtn();
         this.initTimer();
-        this.initVoice();
 
     }
 
@@ -32,6 +31,7 @@ class Katsuyou {
         this.initSettings( data.settings );
         this.initSettingsInputs();
         this.initTimer();
+        this.initVoice();
         this.onLoad();
     }
 
@@ -180,6 +180,7 @@ class Katsuyou {
             }, data => {
                 self.settings = data;
                 if( param == "timer" ) self.updateTimer( el );
+                if( param == "voice" ) self.toggleVoice();
             }).fail( err => console.error(err) );
 
         });
@@ -497,7 +498,7 @@ class Katsuyou {
 
     speak() {
         var self = this;
-        this.voice.abort();
+        if(this.settings.voice) this.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
             pitch : 1,
             onstart : () => {
@@ -505,7 +506,7 @@ class Katsuyou {
             },
             onend : () => {
                 self.animateZoom(false);
-                self.voice.resume();
+                if(self.settings.voice) self.voice.resume();
             },
         });
     }
@@ -552,13 +553,18 @@ class Katsuyou {
     }
 
     // Voice ____________________________________________________________________________________________________________
+    toggleVoice() {
+        this.settings.voice ? this.voice.resume() : this.voice.pause();
+    }
+
     initVoice() {
 
+        this.voiceEl = $('#voice');
         if (annyang) {
 
             this.voice = annyang;
             this.voice.setLanguage('ja');
-            this.voice.start();
+            if(this.settings.voice) this.voice.start();
 
             const self = this;
             this.voice.addCommands({
@@ -573,14 +579,17 @@ class Katsuyou {
             });
 
             this.voice.addCallback('soundstart', function() {
-                $('#voice').addClass('on');
+                self.voiceEl.addClass('on');
             });
 
             this.voice.addCallback('end', function() {
-                $('#voice').removeClass('on');
+                self.voiceEl.removeClass('on');
             });
             
         } else {
+            this.settings.voice = false;
+            this.voiceEl.hide();
+            $('#voice-settings').addClass('unsupported');
             console.error( 'Browser not supported for voice recognition' );
         }
 
@@ -593,6 +602,7 @@ class Katsuyou {
     }
 
     updateVoice() {
+        if( !this.settings.voice ) return;
         const commands = {}, self = this;
         commands[this.answer.reading] = () => { if(!self.disabled && self.playing) self.checkAnswer(null, true); };
         this.clearVoice();
