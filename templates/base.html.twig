@@ -15,6 +15,8 @@
 
         <title>{{title}}</title>
 
+        <meta property="fb:app_id" content="614497849442507">
+
         <meta property="og:site_name" content="{{title}}">
         <meta property="og:type" content="website" />
         <meta property="og:image" content="{{ absolute_url( asset( 'img/screenshot.png' ) ) }}" />
@@ -51,20 +53,9 @@
     <body>
         {% block body %}{% endblock %}
 
-        <div id="fb-root"></div>
-<script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) return;
-js = d.createElement(s); js.id = id;
-js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<!-- Your share button code -->
-<div class="fb-share-button" 
-data-href="https://katsuyou.training" 
-data-layout="button_count">
-</div>
+        {# <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=614497849442507&autoLogAppEvents=1" nonce="K9M2MjHL"></script>
+        <div style="position: fixed;bottom: 10px;left: 10px;" class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-colorscheme="dark" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div> #}
 
         {% block javascripts %}
             <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
