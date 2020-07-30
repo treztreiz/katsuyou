@@ -51,16 +51,4 @@ class MainController extends AbstractController
         return $settings ? $this->json($settings) : $this->json('Error', 500);
     }
 
-    /**
-     * @Route("/robots.txt", name="seo.robots")
-     */
-    public function robots()
-    {   
-        $response = $this->renderView('seo/robots.txt.twig');
-        $response = new Response( $response );
-        $response->headers->set('Content-Type', 'text/txt');
-
-        return $response;
-    }
-
 }
