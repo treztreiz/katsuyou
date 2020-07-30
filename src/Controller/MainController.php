@@ -51,4 +51,12 @@ class MainController extends AbstractController
         return $settings ? $this->json($settings) : $this->json('Error', 500);
     }
 
+    /**
+     * @Route("/privacy", name="privacy")
+     */
+    public function privacy()
+    {   
+        return $this->render('main/privacy.html.twig');
+    }
+
 }
