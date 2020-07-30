@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.getLocale() }}">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Katsuyou | Japanese conjugation training</title>
+
+        <meta charset="UTF-8" lang="{{ app.request.getLocale() }}">
+        <meta http-equiv="Content-Type" content="text/html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="robots" content="index, follow">
+
+        <link rel="canonical" href="{{ app.request.uri }}" />
+        <meta property="og:url" content="{{ app.request.uri }}">
+
+        {% set title = "Katsuyou | Japanese conjugation training" %}
+        {% set description = "Train your japanese conjugation skills et pronunciation with this infinite quizz. Setup your own configuration to master specific verbs or tenses." %}
+
+        <title>{{title}}</title>
+
+        <meta property="og:site_name" content="{{title}}">
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="{{ absolute_url( asset( 'img/screenshot.png' ) ) }}" />
+        <meta property="twitter:card" content="summary_large_image"/>
+
+        <meta property="og:title" content="{{title}}">
+        <meta property="twitter:title" content="{{title}}" />
+
+        <meta property="twitter:card" content="summary_large_image"/>
+        <meta name="description" content="{{ description  }}">
+        <meta property="og:description" content="{{ description  }}">
+        <meta property="twitter:description" content="{{ description  }}" />
+        <meta property="st:section" content="{{ description  }}"/>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        {% block stylesheets %}
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-            <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-        {% endblock %}
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158357857-5"></script>
@@ -19,6 +39,13 @@
             gtag('js', new Date());
             gtag('config', 'UA-158357857-5');
         </script>
+
+
+        {% block stylesheets %}
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        {% endblock %}
 
     </head>
     <body>
