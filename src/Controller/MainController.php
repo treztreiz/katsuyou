@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Services\SettingsManager;
 use App\Repository\VerbRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -48,6 +49,18 @@ class MainController extends AbstractController
         $settings = $this->settings->update($param, $value);
 
         return $settings ? $this->json($settings) : $this->json('Error', 500);
+    }
+
+    /**
+     * @Route("/robots.txt", name="seo.robots")
+     */
+    public function robots()
+    {   
+        $response = $this->renderView('seo/robots.txt.twig');
+        $response = new Response( $response );
+        $response->headers->set('Content-Type', 'text/txt');
+
+        return $response;
     }
 
 }
