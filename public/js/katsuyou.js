@@ -374,7 +374,7 @@ class Katsuyou {
             this.toAnimate.push(this.tenseEl);
         }
 
-        this.settings.sound ? this.speak() : this.animate();
+        this.speak();
 
     }
 
@@ -508,6 +508,8 @@ class Katsuyou {
     }
 
     speak() {
+        if(!this.settings.sound || !this.isAudioSupported()) return this.animate();
+
         var self = this;
         if(this.settings.voice && !this.isMobile) this.voice.abort();
         responsiveVoice.speak( this.audio, "Japanese Female", {
@@ -520,6 +522,11 @@ class Katsuyou {
                 if(self.settings.voice && !self.isMobile) self.voice.resume();
             },
         });
+    }
+    
+    isAudioSupported()
+    {
+        return typeof responsiveVoice !== "undefined";
     }
 
     // Timer ____________________________________________________________________________________________________________
@@ -616,7 +623,7 @@ class Katsuyou {
     }
 
     clearVoice() {
-        if(this.history.length) {
+        if(this.settings.voice && this.history.length) {
             this.voice.removeCommands( this.history[0].answer.reading );
         }
     }
