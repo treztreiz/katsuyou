@@ -1,0 +1,39 @@
+<meta charset="UTF-8" lang="{{ app.request.getLocale() }}">
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="{{ app.request.uri }}" />
+<meta property="og:url" content="{{ app.request.uri }}">
+
+{% set title = "Katsuyou | Japanese conjugation training" %}
+{% set description = "Train your japanese conjugation skills et pronunciation with this playful quizz. Setup your own configuration to master specific verbs or tenses." %}
+
+<title>{{title}}</title>
+
+<meta property="fb:app_id" content="614497849442507">
+
+<meta property="og:site_name" content="{{title}}">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="{{ absolute_url( asset( 'img/screenshot.png' ) ) }}" />
+<meta property="twitter:card" content="summary_large_image" />
+
+<meta property="og:title" content="{{title}}">
+<meta property="twitter:title" content="{{title}}" />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta name="description" content="{{ description  }}">
+<meta property="og:description" content="{{ description  }}">
+<meta property="twitter:description" content="{{ description  }}" />
+<meta property="st:section" content="{{ description  }}" />
+
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158357857-5"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-158357857-5');
+</script>

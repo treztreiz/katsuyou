@@ -2,46 +2,7 @@
 <html lang="{{ app.request.getLocale() }}">
     <head>
 
-        <meta charset="UTF-8" lang="{{ app.request.getLocale() }}">
-        <meta http-equiv="Content-Type" content="text/html">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="robots" content="index, follow">
-
-        <link rel="canonical" href="{{ app.request.uri }}" />
-        <meta property="og:url" content="{{ app.request.uri }}">
-
-        {% set title = "Katsuyou | Japanese conjugation training" %}
-        {% set description = "Train your japanese conjugation skills et pronunciation with this infinite quizz. Setup your own configuration to master specific verbs or tenses." %}
-
-        <title>{{title}}</title>
-
-        <meta property="fb:app_id" content="614497849442507">
-
-        <meta property="og:site_name" content="{{title}}">
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="{{ absolute_url( asset( 'img/screenshot.png' ) ) }}" />
-        <meta property="twitter:card" content="summary_large_image"/>
-
-        <meta property="og:title" content="{{title}}">
-        <meta property="twitter:title" content="{{title}}" />
-
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta name="description" content="{{ description  }}">
-        <meta property="og:description" content="{{ description  }}">
-        <meta property="twitter:description" content="{{ description  }}" />
-        <meta property="st:section" content="{{ description  }}"/>
-
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158357857-5"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-158357857-5');
-        </script>
-
+        {% include 'seo/seo.html.twig' %}
 
         {% block stylesheets %}
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -53,9 +14,9 @@
     <body>
         {% block body %}{% endblock %}
 
-        {# <div id="fb-root"></div>
+        <!-- <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=614497849442507&autoLogAppEvents=1" nonce="K9M2MjHL"></script>
-        <div style="position: fixed;bottom: 10px;left: 10px;" class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-colorscheme="dark" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div> #}
+        <div style="position: fixed;bottom: 10px;left: 10px;" class="fb-like" data-href="https://katsuyou.training" data-colorscheme="dark" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div> -->
 
         {% block javascripts %}
             <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
