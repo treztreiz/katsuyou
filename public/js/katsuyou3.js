@@ -668,6 +668,7 @@ class Katsuyou {
     isVoiceSupported() {
         var agent = window.navigator.userAgent;
         var browser = agent.indexOf("Chrome") != -1 || agent.indexOf("Samsung") != -1 || agent.indexOf("Baidu") != -1 || agent.indexOf("QQ Browser") != -1;
+        $('body').append('<div style="position: absolute; bottom: 10px; left : 10px; font-size: 8px;">' + agent + '</div>');
         return annyang && browser ? true : false;
     }
 
