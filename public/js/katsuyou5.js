@@ -669,7 +669,7 @@ class Katsuyou {
         var ua = window.navigator.userAgent;
         var browser = ua.indexOf("Chrome") != -1 || ua.indexOf("Samsung") != -1 || ua.indexOf("Baidu") != -1 || ua.indexOf("QQ Browser") != -1;
         var facebook = ua.indexOf('Instagram') != -1 || ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1;
-        $('body').append('<div style="position: absolute; bottom: 10px; left : 10px; font-size: 8px;">' + ua + '</div>');
+        //$('body').append('<div style="position: absolute; bottom: 10px; left : 10px; font-size: 8px;">' + ua + '</div>');
         return annyang && browser && !facebook ? true : false;
     }
 
