@@ -383,6 +383,7 @@ class Katsuyou {
 
     initTutorial() {
         this.tutorialOverlayEl = $('#tutorial-overlay');
+        this.tutorialBtnSkipEl = $('#tutorial-skip-btn');
         this.tutorialBtnEl = $('#tutorial-btn');
         this.tutorialTextEl = $('#tutorial-text');
         this.tutorialPhase = 0;
@@ -390,6 +391,9 @@ class Katsuyou {
         this.tutorialBtnEl.on('click', function() {
             self.tutorialPhase ++;
             self.displayTutorial();
+        });
+        this.tutorialBtnSkipEl.on('click', function() {
+            self.closeTutorial();
         });
     }
 
