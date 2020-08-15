@@ -601,7 +601,7 @@ button, input, optgroup, select, textarea {
 
 #tutorial-btns {
     position: absolute;
-    bottom: 60px;
+    bottom: 75px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
