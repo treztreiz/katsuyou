@@ -664,12 +664,18 @@ class Katsuyou {
     toggleVoice() {
         this.settings.voice ? this.voice.resume() : this.voice.pause();
     }
+    
+    isVoiceSupported() {
+        var agent = window.navigator.userAgent;
+        var browser = agent.indexOf("Chrome") != -1 || agent.indexOf("Samsung") != -1 || agent.indexOf("Baidu") != -1 || agent.indexOf("QQ Browser") != -1;
+        return annyang && browser ? true : false;
+    }
 
     initVoice() {
 
         this.voiceEl = $('#voice');
 
-        if (annyang) {
+        if ( this.isVoiceSupported() ) {
 
             this.voice = annyang;
             this.voice.setLanguage('ja');
