@@ -5,6 +5,7 @@ class Katsuyou {
         const self = this;
 
         this.isMobile = this.isMobile();
+        this.tutorial = true;
         this.disabled = true;
         this.playing = false;
         this.history = [];
@@ -22,6 +23,7 @@ class Katsuyou {
         this.initUserInputs();
         this.initSpeakBtn();
         this.initTimer();
+        this.initTutorial();
 
     }
 
@@ -325,7 +327,8 @@ class Katsuyou {
 
         this.updateVoice();
         this.display();
-        this.startTimer();
+        if( this.tutorial ) this.displayTutorial();
+        else this.startTimer();
 
     }
 
@@ -374,8 +377,91 @@ class Katsuyou {
             this.toAnimate.push(this.tenseEl);
         }
 
-        this.speak();
+        if( !this.tutorial ) this.speak();
 
+    }
+
+    initTutorial() {
+        this.tutorialOverlayEl = $('#tutorial-overlay');
+        this.tutorialBtnEl = $('#tutorial-btn');
+        this.tutorialTextEl = $('#tutorial-text');
+        this.tutorialPhase = 0;
+        var self = this;
+        this.tutorialBtnEl.on('click', function() {
+            self.tutorialPhase ++;
+            self.displayTutorial();
+        });
+    }
+
+    displayTutorial() {
+       
+        this.tutorialOverlayEl.fadeIn();
+
+        if( this.tutorialPhase == 0 ) {
+            // Verb
+            this.wordEl.css('display','inline-block');
+            var offset = this.wordEl.offset(), top = offset.top - 10 , left = offset.left - 10, right = left + this.wordEl.width() + 20, bottom = top + this.wordEl.height() + 20;
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.wordEl.css('display','block');
+            this.tutorialTextEl.css({ 'top' : top - 40 + 'px' });
+            this.tutorialTextEl.html('This is the verb you must conjugate :');
+        }
+
+        if( this.tutorialPhase == 1 ) {
+            // Question
+            var offset = $('.conjugaison-infos').offset(), top = offset.top , left = offset.left, right = left + 264, bottom = top + 55;
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.css({ 'top' : top - 40 + 'px' });
+            this.tutorialTextEl.html('This is how you must conjugate the verb :');
+        }
+
+        if( this.tutorialPhase == 2 ) {
+            // Negative
+            var offset = this.negationEl.offset(), top = offset.top , left = offset.left, right = left + 82, bottom = top + 55;
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.html('<i class="material-icons pos">check_circle</i> <b>positive</b> or <i class="material-icons neg">do_not_disturb</i> <b>negative</b> :');
+        }
+
+        if( this.tutorialPhase == 3 ) {
+            // Tense
+            var offset = this.tenseEl.offset(), top = offset.top , left = offset.left, right = left + 100, bottom = top + 55;
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.html('A random tense :');
+        }
+
+        if( this.tutorialPhase == 4 ) {
+            // Formality
+            var offset = this.formalityEl.offset(), top = offset.top , left = offset.left, right = left + 82, bottom = top + 55;
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.html('<i class="material-icons pos">sms</i> <b>polite</b> or <i class="material-icons neg">sms_failed</i> <b>plain</b> :');
+        }
+
+        if( this.tutorialPhase == 5 ) {
+            var offset = this.formEl.offset(), top = offset.top , left = offset.left, right = left + this.formEl.width(), bottom = top + this.formEl.height();
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.css({ 'top' : top - 40 + 'px' });
+            this.tutorialTextEl.html('Type the answer here, or use your voice :');
+        }
+
+        if( this.tutorialPhase == 6 ) {
+            var s = $('#settings-btn');
+            var offset = s.offset(), top = offset.top , left = offset.left, right = left + 51, bottom = top + s.height();
+            this.tutorialOverlayEl.css('clip-path', 'polygon(0% 0%, 0% 100%, ' + left + 'px 100%, ' + left + 'px ' + top + 'px, ' + right + 'px ' + top + 'px, ' + right + 'px ' + bottom + 'px, ' + left + 'px ' + bottom + 'px, ' + left + 'px 100%, 100% 100%, 100% 0%)' );
+            this.tutorialTextEl.css({ 'top' : bottom + 40 + 'px' });
+            this.tutorialTextEl.html('Customize your quiz for a personalized experience :)');
+        }
+
+        if( this.tutorialPhase == 7 ) {
+            this.closeTutorial();
+        }
+
+    }
+
+    closeTutorial() {
+        this.tutorial = false;
+        this.tutorialOverlayEl.fadeOut();
+        this.startTimer();
+        this.speak();
     }
 
     updateHistory(success) {
