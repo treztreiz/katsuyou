@@ -14,10 +14,6 @@
     <body>
         {% block body %}{% endblock %}
 
-        <!-- <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=614497849442507&autoLogAppEvents=1" nonce="K9M2MjHL"></script>
-        <div style="position: fixed;bottom: 10px;left: 10px;" class="fb-like" data-href="https://katsuyou.training" data-colorscheme="dark" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div> -->
-
         {% block javascripts %}
             <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
